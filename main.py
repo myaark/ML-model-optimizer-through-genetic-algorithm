@@ -1,6 +1,6 @@
 import tkinter as tk
 from svmGeneticalgo import best_solution as best_solution_svmGeneticalgo
-from rainforestGeneticalgo import best_solution as best_solution_rainforestGeneticalgo
+from randomforestGeneticalgo import best_solution as best_solution_rainforestGeneticalgo
 from gradientboosterGeneticalgo import best_solution as best_solution_gradientboosterGeneticalgo
 from svmHillclimbing import best_solution as best_solution_svmHillClimbing
 

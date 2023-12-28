@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import random
 
@@ -24,10 +24,9 @@ def initialize_population(population_size):
 # Machine Learning Model Evaluation
 def evaluate_individual(individual):
     n_estimators, max_depth, model_type = individual
-    if model_type == 'GradientBoosting':
-        classifier = GradientBoostingClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-    else:
-        raise ValueError("Invalid model type")
+    
+    classifier = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
+ 
     
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)
