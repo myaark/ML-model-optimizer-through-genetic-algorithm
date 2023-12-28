@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import  GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 import random
 
@@ -18,13 +18,12 @@ POPULATION_SIZE = 10
 
 def initialize_population(population_size):
     return [
-        [random.randint(1, 100), random.randint(1, 20), 'RandomForest'],
-        [random.randint(1, 100), random.randint(1, 20), 'GradientBoosting']
+        [random.randint(1, 100), random.randint(1, 20)]
     ] * (population_size // 2)
 
 # Machine Learning Model Evaluation
 def evaluate_individual(individual):
-    n_estimators, max_depth , modeltype = individual
+    n_estimators, max_depth = individual
     classifier = GradientBoostingClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)

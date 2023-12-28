@@ -17,13 +17,13 @@ POPULATION_SIZE = 10
 
 def initialize_population(population_size):
     return [
-        [random.randint(1, 100), random.randint(1, 20), 'GradientBoosting']
+        [random.randint(1, 100), random.randint(1, 20)]
         for _ in range(population_size)
     ]
 
 # Machine Learning Model Evaluation
 def evaluate_individual(individual):
-    n_estimators, max_depth, model_type = individual
+    n_estimators, max_depth = individual
     
     classifier = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
  
