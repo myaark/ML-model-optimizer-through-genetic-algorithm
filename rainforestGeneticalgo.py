@@ -1,33 +1,39 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 import random
 
 # Load the Iris dataset from a CSV file
 iris_df = pd.read_csv('iris.csv')
 X = iris_df.drop('Species', axis=1)
-y = iris_df['Species']
+Y = iris_df['Species']
 
 # Split the dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=50)
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.8, random_state=50)
 
 # Defining the genetic algorithm parameter
 POPULATION_SIZE = 10
 
-
 def initialize_population(population_size):
-    return [[random.randint(1, 100), random.randint(1, 20)] for _ in range(population_size)]
+    return [
+        [random.randint(1, 100), random.randint(1, 20), 'GradientBoosting']
+        for _ in range(population_size)
+    ]
 
-
-# Random Forest Classifier
+# Machine Learning Model Evaluation
 def evaluate_individual(individual):
-    n_estimators, max_depth = individual
-    rf_classifier = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-    rf_classifier.fit(X_train, y_train)
-    y_pred = rf_classifier.predict(X_test)
+    n_estimators, max_depth, model_type = individual
+    if model_type == 'GradientBoosting':
+        classifier = GradientBoostingClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
+    else:
+        raise ValueError("Invalid model type")
+    
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     return accuracy
+
 
 def select_parents(population, num_parents):
     parents = sorted(population, key=evaluate_individual, reverse=True)[:num_parents]
@@ -51,7 +57,6 @@ def mutate(individual):
 
 def genetic_algorithm(population_size, CONSTRAINT_VALUE):
     population = initialize_population(population_size)
-    best_solution = [50, 5]  # Initial best solution
     generation = 0
     while True:
         parents = select_parents(population, num_parents=2)
