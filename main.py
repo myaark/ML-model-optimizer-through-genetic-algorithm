@@ -20,7 +20,7 @@ def on_select(val):
 
 # Initialize main window
 root = tk.Tk()
-root.title("Dropdown Example")
+root.title("GeneticOptiML")
 root.geometry("300x200")
 
 selected_option = tk.StringVar()
